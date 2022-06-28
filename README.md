@@ -1,11 +1,16 @@
-- ## Setup Docker on Amazon Linux EC2
-- ## Setup Docker Compose on Amazon Linux EC2
-- ## Run Jenkins using Git and docker-compose.yml
+- ### Setup Docker on Amazon Linux EC2
+- ### Setup Docker Compose on Amazon Linux EC2
+- ### Clone docker-compose.yml file from Git
+- ### Run Jenkins in browser
 ---
 ### Docker CE Install:
 ```
 sudo amazon-linux-extras install docker
+```
+```
 sudo service docker start
+```
+```
 sudo usermod -a -G docker ec2-user
 ```
 **Make docker auto-start**
@@ -20,6 +25,10 @@ sudo yum install -y git
 ```
 sudo chmod ugo+rw /var/run/docker.sock
 ```
+**Verify Docker version**
+```
+docker version
+```
 ---
 ### Docker-Compose Install:
 Copy the latest version of [docker-compose](https://github.com/docker/compose/releases/) binary from GitHub:
@@ -30,17 +39,20 @@ sudo curl -L https://github.com/docker/compose/releases/latest/download/docker-c
 ```
 sudo chmod +x /usr/local/bin/docker-compose
 ```
-**Verify Docker and Docker-Compose versions**
+**Verify Docker-Compose version**
 ```
-docker version
 docker-compose version
 ```
 ---
-## Clone this git repository:!!!!!!!
+## Clone this Git repository:
 ```
-git clone https://github.com/agburov/ansible-mysql.git
+git clone https://github.com/agburov/Docker-Jenkins.git
 ```
-**Run docker-compose container**
+**Open project folder with docker-compose file**
+```
+cd Docker-Jenkins
+```
+**Run Docker-Compose container**
 ```
 docker-compose up -d
 ```
@@ -48,20 +60,22 @@ docker-compose up -d
 ```
 docker exec jenkins-lts cat /var/jenkins_home/secrets/initialAdminPassword
 ```
-***or from logs***
+*or from logs*
 ```
 docker logs jenkins-lts
 
 ```
-**Start Jenkins**\
-open the URL using EC2_IPv4_Public_IP along with port 8080 ```<EC2_IPv4_Public_IP>:8080```
+---
+## Start Jenkins:
+open the URL using EC2_IPv4_Public_IP along with port 8080 <br> ```<EC2_IPv4_Public_IP>:8080```
 
 **Use Jenkins's password**\
 Paste Jenkins administrator password from above step to unlock Jenkins
 
 ---
 ## Useful Docker cleanup commands:
-docker rm -f `docker ps -aq` \
+docker rm -f \
+docker ps -aq \
 docker volume prune -f \
 docker network prune -f
 
