@@ -1,6 +1,6 @@
 - ### Setup Docker on Amazon Linux EC2
 - ### Setup Docker Compose on Amazon Linux EC2
-- ### Clone docker-compose.yml file from Git
+- ### Clone required files from Git
 - ### Run Jenkins in browser
 ---
 ### Docker CE Install:
@@ -13,7 +13,7 @@ sudo service docker start
 ```
 sudo usermod -a -G docker ec2-user
 ```
-**Make docker auto-start**
+**Make Docker auto-start**
 ```
 sudo chkconfig docker on
 ```
@@ -48,29 +48,49 @@ docker-compose version
 ```
 git clone https://github.com/agburov/Docker-Jenkins.git
 ```
-**Open project folder with docker-compose file**
+**Open project folder**
 ```
 cd Docker-Jenkins
+```
+**Fix permissions after download**
+```
+chmod +x jenkins-start.sh
+```
+**Add network for containers**
+```
+docker network create jenkins
 ```
 **Run Docker-Compose container**
 ```
 docker-compose up -d
 ```
-**Get Jenkins administrator pass from file**
+**Build a new docker image from the Dockerfile**
 ```
-docker exec jenkins-lts cat /var/jenkins_home/secrets/initialAdminPassword
-```
-*or from logs*
-```
-docker logs jenkins-lts
-
+docker build -t myjenkins-blueocean:2.346.1-1 .
 ```
 ---
 ## Start Jenkins:
-open the URL using EC2_IPv4_Public_IP along with port 8080 <br> ```<EC2_IPv4_Public_IP>:8080```
+```
+sh jenkins-start.sh
+```
 
-**Use Jenkins's password**\
-Paste Jenkins administrator password from above step to unlock Jenkins
+**Open the URL using EC2_IPv4_Public_IP along with port 8080**
+
+> Use your EC2 public IP address, like \<EC2_IPv4_Public_IP>:8080
+
+
+**Get Jenkins administrator pass from file**
+```
+docker exec jenkins-blueocean cat /var/jenkins_home/secrets/initialAdminPassword
+```
+*or from logs*
+```
+docker logs jenkins-blueocean  -f
+
+```
+
+**Use Jenkins's password**
+> Paste the Jenkins admin password above to unlock Jenkins
 
 ---
 ## Useful Docker cleanup commands:

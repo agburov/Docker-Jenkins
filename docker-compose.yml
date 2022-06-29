@@ -1,13 +1,23 @@
-version: '3.7'
+version: '3.9'
 services:
-  jenkins:
-    image: jenkins/jenkins:lts
-    privileged: true
-    user: root
+  jenkins-docker:
+    command:
+      - --storage-driver
+      - overlay2
+    container_name: jenkins-docker
+    environment:
+      DOCKER_TLS_CERTDIR: /certs
+    image: docker:dind
+    networks:
+      jenkins:
+        aliases:
+          - docker
     ports:
-      - 8080:8080
-    container_name: jenkins-lts
+    - 2376:2376
+    privileged: true
     volumes:
-      - ~/jenkins_home:/var/jenkins_home
-      - /var/run/docker.sock:/var/run/docker.sock
-      - /usr/local/bin/docker:/usr/local/bin/docker
+    - /jenkins-docker-certs:/certs/client
+    - /jenkins-data:/var/jenkins_home
+
+networks:
+  jenkins:
