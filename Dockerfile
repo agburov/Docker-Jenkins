@@ -10,5 +10,5 @@ RUN echo "deb [arch=$(dpkg --print-architecture) \
 RUN apt-get update && apt-get install -y docker-ce-cli
 USER jenkins
 RUN jenkins-plugin-cli --plugins blueocean:1.25.5 \
-docker-workflow:1.28 amazon-ecr:1.73.v741d474abe74 \
-aws-secrets-manager-credentials-provider:1.2.0
+amazon-ecr:1.73.v741d474abe74 \
+aws-credentials:191.vcb_f183ce58b_9
