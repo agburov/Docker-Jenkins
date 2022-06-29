@@ -9,4 +9,4 @@ RUN echo "deb [arch=$(dpkg --print-architecture) \
   $(lsb_release -cs) stable" > /etc/apt/sources.list.d/docker.list
 RUN apt-get update && apt-get install -y docker-ce-cli
 USER jenkins
-RUN jenkins-plugin-cli --plugins blueocean:1.25.5 amazon-ecr:1.73.v741d474abe74 aws-credentials:189.v3551d5642995
+RUN jenkins-plugin-cli --plugins blueocean:1.25.5
