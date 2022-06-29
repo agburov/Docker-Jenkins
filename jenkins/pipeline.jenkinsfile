@@ -48,7 +48,7 @@ pipeline {
                 input("Proceed with deployment?")
                 echo "Deploying ${env.MY_ENV}"
                 script {
-                    docker.withRegistry("https://${env.REGISTRY_NAME}", 'ecr:us-east-1:vlad-terraform-user') {
+                    docker.withRegistry("https://${env.REGISTRY_NAME}", 'ECR_CREDS') {
                         docker.image("${env.REGISTRY_NAME}/${params.IMAGE_NAME}:${env.BUILD_ID}").push()
                     }
                 }

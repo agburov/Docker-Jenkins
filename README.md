@@ -44,7 +44,7 @@ sudo chmod +x /usr/local/bin/docker-compose
 docker-compose version
 ```
 ---
-## Clone this Git repository:
+### Clone this Git repository:
 ```
 git clone https://github.com/agburov/Docker-Jenkins.git
 ```
@@ -69,7 +69,7 @@ docker-compose up -d
 docker build -t myjenkins-blueocean:2.346.1-1 .
 ```
 ---
-## Start Jenkins:
+### Start Jenkins:
 ```
 sh jenkins-start.sh
 ```
@@ -92,7 +92,6 @@ docker logs jenkins-blueocean  -f
 **Use Jenkins's password**
 > Paste the Jenkins admin password above to unlock Jenkins
 
----
 ## Useful Docker cleanup commands:
 docker rm -f \
 docker ps -aq \
