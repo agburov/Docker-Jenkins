@@ -1,5 +1,3 @@
-def my_tmp_var  = "Temp var"
-
 pipeline {
     agent any
 
@@ -33,22 +31,17 @@ pipeline {
         stage("Build") {
             steps {
                 echo "Building; Build ID: ${env.BUILD_ID}"
-                // sh "docker build -t ${params.IMAGE_NAME}:${env.BUILD_ID} ."
                 script {
-                    my_tmp_var = "Hello! ${env.MY_ENV}"
                     docker.build("${env.REGISTRY_NAME}/${params.IMAGE_NAME}:${env.BUILD_ID}")
                 }
-
-                echo "Hello from ${my_tmp_var}"
             }
         }
 
         stage("Push") {
             steps {
                 input("Proceed with deployment?")
-                echo "Deploying ${env.MY_ENV}"
                 script {
-                    docker.withRegistry("https://${env.REGISTRY_NAME}", 'ECR_CREDS') {
+                    docker.withRegistry("https://${env.REGISTRY_NAME}", 'ecr:us-east-1:art-code') {
                         docker.image("${env.REGISTRY_NAME}/${params.IMAGE_NAME}:${env.BUILD_ID}").push()
                     }
                 }
